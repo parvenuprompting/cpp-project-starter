@@ -110,66 +110,6 @@ foreach(RES_FILE ${SIMPLE_VIEWER_RESOURCES})
     )
 endforeach()
 
-# --- Original Log Analyzer (Legacy - for reference) ---
-# Keep original sources for now, will be moved to examples/ later
-set(LEGACY_CORE_SOURCES
-    core/StandardLogParser.cpp
-    core/PatternLogParser.cpp
-    core/Timestamp.cpp
-    analysis/LevelCountAnalyzer.cpp
-    analysis/KeywordHitAnalyzer.cpp
-    analysis/TopErrorAnalyzer.cpp
-    analysis/TimeRangeFilter.cpp
-    analysis/AnalysisResult.cpp
-    analysis/Pipeline.cpp
-    app/Application.cpp
-)
-
-# --- Legacy CLI Executable ---
-add_executable(log_analyzer
-    ${LEGACY_CORE_SOURCES}
-    report/TextReportRenderer.cpp
-    main.cpp
-)
-
-# Link against OLD io/ files (not framework)
-target_sources(log_analyzer PRIVATE
-    io/MemoryMappedFile.cpp
-    io/FileWriter.cpp
-    core/ConfigManager.cpp
-)
-
-# --- Legacy GUI Executable ---
-add_executable(log_analyzer_gui MACOSX_BUNDLE
-    ${LEGACY_CORE_SOURCES}
-    gui/GuiController.cpp
-    gui/LogViewer.cpp
-    gui/main_gui.cpp
-    resources/AppIcon.icns
-    resources/background_calm.png
-    resources/fa-solid-900.ttf
-)
-
-# Link against OLD io/ files
-target_sources(log_analyzer_gui PRIVATE
-    io/MemoryMappedFile.cpp
-    io/FileWriter.cpp
-    core/ConfigManager.cpp
-)
-
-set_target_properties(log_analyzer_gui PROPERTIES
-    MACOSX_BUNDLE_ICON_FILE "AppIcon.icns"
-    RESOURCE "resources/AppIcon.icns;resources/background_calm.png;resources/fa-solid-900.ttf"
-)
-
-target_link_libraries(log_analyzer_gui PRIVATE 
-    imgui 
-    ${COCOA_LIB} 
-    ${IOKIT_LIB} 
-    ${COREVIDEO_LIB} 
-    OpenGL::GL
-)
-
 # --- Framework Tests ---
 add_executable(framework_tests
     tests/framework/test_theme.cpp
@@ -179,24 +119,8 @@ add_executable(framework_tests
 target_include_directories(framework_tests PRIVATE external/catch2)
 target_link_libraries(framework_tests PRIVATE modern_framework)
 
-# --- Legacy Tests ---
-enable_testing()
-
-add_executable(unit_tests
-    ${LEGACY_CORE_SOURCES}
-    tests/test_parser_catch2.cpp
-    tests/test_analyzers_catch2.cpp
-    tests/test_pattern_parser.cpp
-    tests/test_main_catch2.cpp
-    external/catch2/catch_amalgamated.cpp
-)
-
-target_sources(unit_tests PRIVATE
-    io/MemoryMappedFile.cpp
-    io/FileWriter.cpp
-    core/ConfigManager.cpp
-)
-
-target_include_directories(unit_tests PRIVATE external/catch2)
-
-add_test(NAME AllTests COMMAND unit_tests)
+# --- Note on Legacy Code ---
+# De originele Log Analyzer code is verplaatst naar voor archivering naar:
+# examples/log_analyzer/
+# Deze is momenteel niet geconfigureerd in deze root CMakeLists.txt om 
+# de template neutraal en overzichtelijk te houden.
