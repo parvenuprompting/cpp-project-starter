@@ -1,6 +1,8 @@
 #include "../../external/catch2/catch_amalgamated.hpp"
 #include "../../framework/gui/Theme.h"
 
+using Catch::Approx;
+
 TEST_CASE("Theme colors can be customized", "[theme]") {
   framework::ThemeColors colors;
   colors.accentColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // Red
