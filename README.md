@@ -1,7 +1,5 @@
 # 🚀 Modern C++ App Template (Glassmorphism)
 
-![Banner](resources/banner.png)
-
 Dit project is een **premium, neutrale C++ applicatie template** ontworpen voor ontwikkelaars die razendsnel moderne desktop applicaties willen bouwen met een verbluffende Glassmorphism UI. Het framework handelt de complexe window management, rendering en resource handling af, zodat jij je kunt focussen op de applicatie logica.
 
 ![C++](https://img.shields.io/badge/std-c%2B%2B20-blue.svg)
