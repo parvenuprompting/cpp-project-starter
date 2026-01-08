@@ -5,13 +5,13 @@ build/
 *.dSYM
 
 # Executables (if not in build/)
-log_analyzer
-log_analyzer_gui
-log_analyzer_gui_*
-test_parser
-test_analyzers
-test_catch2
-unit_tests
+/log_analyzer
+/log_analyzer_gui
+/log_analyzer_gui_*
+/test_parser
+/test_analyzers
+/test_catch2
+/unit_tests
 
 # Runtime & Config
 *.log
