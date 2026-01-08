@@ -5,9 +5,12 @@
 #include "../../framework/gui/GuiUtils.h"
 #include "../../framework/gui/NotificationCenter.h"
 #include "../../framework/gui/Theme.h"
+#include <GLFW/glfw3.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <mach-o/dyld.h> // For _NSGetExecutablePath on macOS
+#include <unistd.h>      // For fork/execv
 
 namespace demo {
 
@@ -138,8 +141,28 @@ void SimpleViewerApp::renderMenuBar() {
 
       ImGui::Separator();
 
+      if (ImGui::MenuItem(ICON_FA_ARROWS_ROTATE " Restart", "Cmd+R")) {
+        // Get the path to the current executable
+        char exePath[1024];
+        uint32_t size = sizeof(exePath);
+        if (_NSGetExecutablePath(exePath, &size) == 0) {
+          framework::NotificationCenter::instance().info("Restarting...");
+          // Fork and exec to restart
+          pid_t pid = fork();
+          if (pid == 0) {
+            // Child process: wait a moment then launch new instance
+            usleep(500000); // 500ms delay
+            char *argv[] = {exePath, nullptr};
+            execv(exePath, argv);
+            exit(0);
+          }
+          // Parent: request window close
+          glfwSetWindowShouldClose(glfwGetCurrentContext(), GLFW_TRUE);
+        }
+      }
+
       if (ImGui::MenuItem(ICON_FA_ARROW_RIGHT_FROM_BRACKET " Quit", "Cmd+Q")) {
-        // WindowManager handles this
+        glfwSetWindowShouldClose(glfwGetCurrentContext(), GLFW_TRUE);
       }
       ImGui::EndMenu();
     }
