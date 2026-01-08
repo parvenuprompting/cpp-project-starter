@@ -7,36 +7,35 @@ Dit project is een **premium, neutrale C++ applicatie template** ontworpen voor 
 ![C++](https://img.shields.io/badge/std-c%2B%2B20-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## ✨ Waarom deze Template?
+## 📸 Dashboard Preview
+![Dashboard Demo](resources/dashboard_demo.png)
 
-*   **Premium Esthetiek**: Volledig geoptimaliseerde Glassmorphism interface met frosted glass effecten, vloeiende animaties en een rustgevend Ken Burns achtergrond-effect.
-*   **Inversion of Control (IoC)**: Geen gedoe met main loops of GLFW initialisatie. Implementeer simpelweg de `IClientApp` interface en je bent klaar.
-*   **High-Performance Core**: Ingebouwde support voor multi-threading, memory-mapped I/O en efficiënte resource management.
-*   **Cross-Platform Ready**: Geconfigureerd met CMake voor macOS, Linux en Windows.
-*   **Ready-to-use Components**: Inclusief moderne UI componenten zoals sidebars, premium cards, file pickers en geavanceerde datavisualisaties.
+## ✨ Belangrijkste Features
 
-## 🏗 Architectuur
+### 💎 Premium GUI & UX
+*   **Modern Glassmorphism**: Frosted glass effecten, vloeiende transities en High-DPI support.
+*   **Multi-Page Navigatie**: Ingebouwde sidebar voor Dashboard, Viewer en Settings.
+*   **Tab System**: Beheer meerdere documenten of views met een intuïtief tab-systeem.
+*   **Menu Bar & Shortcuts**: Volledig functionele menu's en keyboard shortcuts (o.a. `Cmd+P`, `Cmd+O`, `Cmd+R`).
+*   **Notification Center**: Geanimeerde "Toast" notificaties voor real-time feedback.
 
-De template is strikt gescheiden in twee delen:
-1.  **Modern Framework**: Een statische library (`modern_framework`) die alle engine logica bevat.
-2.  **Client Application**: Jouw code die de `IClientApp` interface implementeert.
+### 🛠 Developer Experience (DX)
+*   **Event Bus**: Ontkoppel je componenten volledig met een type-safe event systeem.
+*   **Action Registry**: Centraliseer alle applicatie-acties voor gebruik in menu's en de Command Palette.
+*   **Command Palette**: Een razendsnel, doorzoekbaar menu voor power-users (als in VS Code of Slack).
+*   **Semantic Themes**: Style je app met `ColorRole` (Accent, Surface, Success) in plaats van hardcoded kleuren.
 
-```cpp
-// De enige code die je nodig hebt om te starten:
-namespace framework {
-    IClientApp* createClientApp() {
-        return new MyCoolApp();
-    }
-}
-```
+### ⚙️ Architectuur
+*   **Inversion of Control (IoC)**: Implementeer simpelweg de `IClientApp` interface.
+*   **High-Performance**: Memory-mapped I/O support en async indexing.
+*   **Cross-Platform**: Volledig CMake-gebaseerd voor macOS, Linux en Windows.
 
 ## 🚀 Snel Starten
 
 ### Vereisten
 *   C++20 compliant compiler
 *   CMake (3.14+)
-*   GLFW (voor GUI)
-*   OpenGL 3.3+
+*   GLFW & OpenGL 3.3+
 
 ### Bouwen & Uitvoeren
 ```bash
@@ -55,19 +54,13 @@ open examples/simple_viewer/simple_viewer.app  # macOS
 ```
 
 ## 📦 Project Structuur
-*   `framework/`: De kern van de engine (Window management, Theme, Utils).
-*   `examples/`: Voorbeeld applicaties ter inspiratie (o.a. de Simple Viewer).
-*   `resources/`: Assets zoals fonts (Font Awesome 6), icons en achtergronden.
-*   `external/`: Externe dependencies zoals ImGui.
-
-## 🎨 UI Features
-*   **Zen Theme**: Geanimeerde achtergrond en vloeiende transities.
-*   **Glass Controls**: Alle ImGui controls zijn gestyled met een modern frosty-glass uiterlijk.
-*   **Vector Icons**: Volledige integratie van Font Awesome 6.
-*   **Resource Manager**: Automatische pad-resolutie voor assets in bundles en development omgevingen.
+*   `framework/`: De kern (Window management, Theme, Core logic).
+*   `examples/`: Voorbeeld applicaties (zoals de `simple_viewer`).
+*   `resources/`: Assets (Fonts, Icons, Backgrounds, Demo images).
+*   `external/`: Dependencies (ImGui, IconsFontAwesome6).
 
 ## 👥 Bijdragen
-Dit project is bedoeld als een solide basis voor diverse C++ tools. Voel je vrij om features toe te voegen aan het framework of extra voorbeelden te creëren!
+Dit project is een solide basis voor elke C++ tool. Voel je vrij om features toe te voegen aan het framework of extra voorbeelden te creëren!
 
 ## 📄 Licentie
 MIT License - zie [LICENSE](LICENSE) voor details.
