@@ -1,6 +1,10 @@
 #include "framework/core/IClientApp.h"
-#include "framework/gui/WindowManager.h"
 #include "framework/utils/ResourceManager.h"
+#include "gui/CommandPalette.h"
+#include "gui/NotificationCenter.h" // Added for NotificationCenter
+#include "gui/Theme.h"
+#include "gui/WindowManager.h"
+#include "imgui.h" // Required for ImGui::GetIO(), ImGui::IsKeyPressed(), ImGuiKey_P
 #include <iostream>
 
 namespace framework {
@@ -28,7 +32,23 @@ int runApplication(int argc, char *argv[]) {
   }
 
   // Run main loop
-  WindowManager::instance().run();
+  while (!WindowManager::instance().shouldClose()) {
+    WindowManager::instance().beginFrame();
+
+    // Global Shortcuts
+    if ((ImGui::GetIO().KeyCtrl || ImGui::GetIO().KeySuper) &&
+        ImGui::IsKeyPressed(ImGuiKey_P)) {
+      CommandPalette::toggle();
+    }
+
+    app->onRenderUI();
+
+    // Layout Overlays
+    CommandPalette::render();
+    NotificationCenter::instance().render();
+
+    WindowManager::instance().endFrame();
+  }
 
   // Cleanup
   WindowManager::instance().shutdown();

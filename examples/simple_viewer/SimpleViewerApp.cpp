@@ -1,8 +1,9 @@
 #include "SimpleViewerApp.h"
 #include "../../external/IconsFontAwesome6.h"
 #include "../../external/imgui/imgui.h"
+#include "../../framework/core/ActionRegistry.h"
 #include "../../framework/gui/GuiUtils.h"
-#include "../../framework/utils/ResourceManager.h"
+#include "../../framework/gui/NotificationCenter.h"
 #include <filesystem>
 #include <iostream>
 
@@ -21,7 +22,16 @@ framework::ClientAppConfig SimpleViewerApp::getConfig() {
   return config;
 }
 
-void SimpleViewerApp::onInit() { std::cout << "SimpleViewerApp initialized\n"; }
+void SimpleViewerApp::onInit() {
+  // Register Actions for Command Palette
+  framework::ActionRegistry::instance().registerAction(
+      "file.open", "Open File", "File", [this]() { showFilePicker_ = true; },
+      "Cmd+O");
+
+  framework::ActionRegistry::instance().registerAction(
+      "app.about", "Show About", "App", [this]() { /* Show about later */ });
+  std::cout << "SimpleViewerApp initialized\n";
+}
 
 void SimpleViewerApp::onUpdate(float deltaTime) {
   // Logic updates here if needed
@@ -233,6 +243,12 @@ void SimpleViewerApp::openFile(const std::string &path) {
   currentPath_ = path;
   isIndexing_ = true;
   indexingProgress_ = 0.0f;
+
+  framework::NotificationCenter::instance().post(
+      "Indexing Started",
+      "Analyzing " + std::filesystem::path(path).filename().string(),
+      framework::NotificationType::Info);
+
   indexerThread_ = std::thread(&SimpleViewerApp::indexFileAsync, this, path);
 }
 
@@ -279,6 +295,10 @@ void SimpleViewerApp::indexFileAsync(const std::string &path) {
   }
   isIndexing_ = false;
   indexingProgress_ = 1.0f;
+
+  framework::NotificationCenter::instance().success(
+      "Indexing Complete: " + std::to_string(lineOffsets_.size()) +
+      " lines analyzed.");
 }
 
 } // namespace demo

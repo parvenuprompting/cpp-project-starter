@@ -190,22 +190,21 @@ void WindowManager::run() {
   }
 
   while (!shouldClose()) {
-    glfwPollEvents();
-
-    // Calculate delta time
-    double currentTime = glfwGetTime();
-    deltaTime_ = static_cast<float>(currentTime - lastFrameTime_);
-    lastFrameTime_ = currentTime;
-
-    // Update client logic
+    beginFrame();
     clientApp_->onUpdate(deltaTime_);
-
-    // Render frame
-    renderFrame();
+    clientApp_->onRenderUI();
+    endFrame();
   }
 }
 
-void WindowManager::renderFrame() {
+void WindowManager::beginFrame() {
+  glfwPollEvents();
+
+  // Calculate delta time
+  double currentTime = glfwGetTime();
+  deltaTime_ = static_cast<float>(currentTime - lastFrameTime_);
+  lastFrameTime_ = currentTime;
+
   // Start ImGui frame
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
@@ -213,10 +212,9 @@ void WindowManager::renderFrame() {
 
   // Render background with Ken Burns effect
   renderBackground();
+}
 
-  // Client rendering
-  clientApp_->onRenderUI();
-
+void WindowManager::endFrame() {
   // Finalize ImGui
   ImGui::Render();
 

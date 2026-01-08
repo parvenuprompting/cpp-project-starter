@@ -49,6 +49,8 @@ add_library(modern_framework STATIC
     framework/gui/Theme.cpp
     framework/gui/WindowManager.cpp
     framework/gui/GuiUtils.cpp
+    framework/gui/CommandPalette.cpp
+    framework/gui/NotificationCenter.cpp
     
     # I/O
     framework/io/MemoryMappedFile.cpp

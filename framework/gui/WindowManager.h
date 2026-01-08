@@ -21,6 +21,12 @@ public:
   /// Blocks until window is closed
   void run();
 
+  /// Start a new frame (Poll events, calc delta, NewFrame)
+  void beginFrame();
+
+  /// End the frame (Render, SwapBuffers)
+  void endFrame();
+
   /// Shutdown and cleanup
   void shutdown();
 

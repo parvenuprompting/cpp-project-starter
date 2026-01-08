@@ -4,6 +4,17 @@
 
 namespace framework {
 
+enum class ColorRole {
+  Accent,
+  Surface,
+  SurfaceVariant,
+  Text,
+  TextDisabled,
+  Error,
+  Success,
+  Background
+};
+
 /// Glassmorphism theme configuration
 struct ThemeColors {
   ImVec4 glassBg = ImVec4(0.08f, 0.08f, 0.12f, 0.70f);
@@ -13,22 +24,21 @@ struct ThemeColors {
   ImVec4 accentActive = ImVec4(0.45f, 0.04f, 0.72f, 1.00f); // Purple
   ImVec4 textBase = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
   ImVec4 textDim = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
+  ImVec4 errorColor = ImVec4(0.92f, 0.26f, 0.35f, 1.00f);
+  ImVec4 successColor = ImVec4(0.32f, 0.84f, 0.41f, 1.00f);
 };
 
 /// Theme manager for glassmorphism UI
 class Theme {
 public:
-  /// Apply glassmorphism theme to ImGui
-  static void applyGlassmorphism();
-
-  /// Apply glassmorphism theme with custom colors
-  static void applyGlassmorphism(const ThemeColors &colors);
-
-  /// Get current theme colors
-  static ThemeColors &getColors();
+  static void
+  applyGlassmorphism(const ThemeColors &colors = getDefaultColors());
+  static const ThemeColors &getColors() { return currentColors_; }
+  static ImVec4 getColor(ColorRole role);
+  static ThemeColors getDefaultColors();
 
 private:
-  static ThemeColors colors_;
+  static ThemeColors currentColors_;
 };
 
 } // namespace framework
